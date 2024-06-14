@@ -19,6 +19,17 @@ public class Point3d {
     public void setX(double x){
         this.x = x;
     }
+    public void setY(double y){
+        this.y = y;
+    }
+    public void setZ(double z){
+        this.z = z;
+    }
+    public void move(double x, double y, double z){
+        this.x += x;
+        this.y += y;
+        this.z += z;
+    }
     public void rotateAboutZ(Point3d point, double theta){
         double dx = this.x - point.x();
         double dy = this.y - point.y();

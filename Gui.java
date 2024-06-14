@@ -8,6 +8,7 @@ public class Gui extends JFrame{
         this.height = height;
         this.setSize(width, height);
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.repaint();
     }
     public void paint(Graphics g){
