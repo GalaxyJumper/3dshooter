@@ -35,7 +35,7 @@ public class Point3d {
         double dy = this.y - point.y();
         double angle = Math.atan2(dy, dx);
         System.out.println(angle * (180 / Math.PI));
-        double dist = 100;
+        double dist = Math.sqrt((dx*dx) + (dy*dy));
         angle += theta;
         System.out.println(angle * (180 / Math.PI));
         this.x = (dist * Math.cos(angle)) + point.x();

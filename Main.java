@@ -7,7 +7,7 @@ class Main{
         
         while(count < 5000){
             test.rotateAboutZ(origin, 0.02);
-            origin.move(0.001, 0, 0);
+            origin.move(0.01, 0, 0);
             
             gui.drawPoint3d(test);
             gui.drawPoint3d(origin);
