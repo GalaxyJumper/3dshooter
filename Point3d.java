@@ -6,7 +6,7 @@ public class Point3d {
         this.x = x;
         this.y = y;
         this.z = z;
-    }
+    } // bruder
     public double x(){
         return this.x;
     }
