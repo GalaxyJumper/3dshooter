@@ -32,29 +32,15 @@ public class Point3d {
     }
     // Rotate this about the X axis of th 
     public void rotateAboutZ(Point3d point, double theta){
-        double dx = this.x - point.x();
-        double dy = this.y - point.y();
-        
-        double angle = Math.atan2(dy, dx);
-
-        double dist = Math.sqrt((dx*dx) + (dy*dy));
-
-        angle += theta;
-
-        this.x = (dist * Math.cos(angle)) + point.x();
-        this.y = (dist * Math.sin(angle)) + point.y();
+        this.x = (x * Math.cos(theta) - y * Math.sin(theta)) + point.x();
+        this.y = (y * Math.cos(theta) + x * Math.sin(theta)) + point.y();
     }
     public void rotateAboutX(Point3d point, double theta){
-        double dy = this.y - point.y();
-        double dz = this.z - point.z();
-        
-        double angle = Math.atan2(dy, dz);
-
-        double dist = Math.sqrt((dz*dz) + (dy*dy));
-
-        angle += theta;
-        
-        this.z = (dist * Math.cos(angle)) + point.z();
-        this.y = (dist * Math.sin(angle)) + point.y();
+        this.z = -(z * Math.cos(theta) - y * Math.sin(theta)) + point.z();
+        this.y =  (y * Math.cos(theta) + z * Math.sin(theta)) + point.y();
     }
+    public void rotateAboutY(Point3d point, double theta){
+        this.x = (x * Math.cos(theta) - y * Math.sin(theta)) + point.x();
+        this.z = -(z * Math.cos(theta) - y * Math.sin(theta)) + point.z();
+    } 
 }
