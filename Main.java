@@ -13,7 +13,6 @@ class Main{
         Timer t = new Timer(17, new ActionPerformer(){
             public void actionPerformed(ActionEvent e){
                 test.rotateAboutZ(origin, 0.2);
-                test.rotateAboutX(origin, 0.4);
                 gui.drawPoint3d(test);
                 gui.drawPoint3d(origin);
             }

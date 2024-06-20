@@ -42,5 +42,5 @@ public class Point3d {
     public void rotateAboutY(Point3d point, double theta){
         this.x = (x * Math.cos(theta) - y * Math.sin(theta)) + point.x();
         this.z = -(z * Math.cos(theta) - y * Math.sin(theta)) + point.z();
-    } 
+    } // bro why
 }
