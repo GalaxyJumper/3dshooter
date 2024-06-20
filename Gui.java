@@ -33,7 +33,7 @@ public class Gui extends JFrame implements ActionListener{
                 g2d.setColor(new Color(r, g, b));
                 g2d.fillRect(0, 0, width, height);
             }
-        });
+        });;
     }
     public void drawPoint3d(Point3d p){
         Point3d point = p;

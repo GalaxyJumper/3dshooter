@@ -7,7 +7,7 @@ public class Cuboid {
         this.z = z; 
         this.width = width;
         this.height = height;
-        this.depth = depth;
+        this.depth = depth; //.
         if(mode){
             Point3d[] vertices = {
                 new Point3d(x, y, z),
