@@ -46,6 +46,11 @@ public class Gui extends JFrame implements ActionListener{
             }
         });
     }
+    public void drawCuboid(Cuboid c){
+        for(int i = 0; i < 8; i++){
+            drawPoint3d(c.getPoint(i));
+        }
+    }
     public void actionPerformed(ActionEvent e){
         this.repaint();
     }
