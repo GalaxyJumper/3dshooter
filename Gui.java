@@ -21,7 +21,7 @@ public class Gui extends JPanel implements ActionListener{
         frameTimer = new Timer(17, this);
         frameTimer.start();
         this.repaint();
-        focalLength = 300;
+        focalLength = 200;
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -40,13 +40,26 @@ public class Gui extends JPanel implements ActionListener{
             }
         });
     }
-    public void drawPoint3d(Point3d p){
-        Point3d point = p;
+    public void drawPoint3d(Point3d p, int num){
+        Point3d point = p.toPersp(focalLength);
         drawQueue.add(new GraphicsRunnable(){
             public void draw(Graphics2D g2d){
                 g2d.setColor(Color.BLACK);
                 g2d.setStroke(new BasicStroke(4f));
                 g2d.drawLine((int)point.x() + 400, (int)point.y() + 400, (int)point.x() + 400, (int)point.y() + 400);
+                g2d.drawString("" + num, (int)point.x() + 400, (int)point.y() + 400);
+                
+            }
+        });
+    }
+    public void drawPoint3d(Point3d p, int num, Color color){
+        Point3d point = p.toPersp(focalLength).flip();
+        drawQueue.add(new GraphicsRunnable(){
+            public void draw(Graphics2D g2d){
+                g2d.setColor(color);
+                g2d.setStroke(new BasicStroke(9f));
+                g2d.drawLine((int)point.x() + 400, (int)point.y() + 400, (int)point.x() + 400, (int)point.y() + 400);
+                g2d.drawString("" + num, (int)point.x() + 400, (int)point.y() + 400);
                 
             }
         });
@@ -63,17 +76,27 @@ public class Gui extends JPanel implements ActionListener{
     }
     public void drawCuboid(Cuboid c){
         Color[] colors = {
-            Color.YELLOW,
-            Color.PINK,
-            Color.ORANGE,
-            Color.CYAN,
-            Color.MAGENTA,
-            Color.RED
+            new Color(255, 255, 0, 150),
+            new Color(255, 175, 175, 150),
+            new Color(255, 175, 0, 150),
+            new Color(0, 255, 255, 150),
+            new Color(255, 0, 255, 150),
+            new Color(255, 0, 0, 150)
         };
-        c.cull();
+        
+
         for(int i = 0; i < 6; i++){
             drawCuboidFace(c, i, colors[i]);
         }
+        for(int i = 0; i < 8; i++){
+            drawPoint3d(c.getPoint(i).flip(), i);
+        }
+        
+        c.cull();
+
+    }
+    public double getFocalLength(){
+        return focalLength;
     }
     public void actionPerformed(ActionEvent e){
         this.repaint();

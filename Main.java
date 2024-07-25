@@ -8,20 +8,17 @@ class Main{
         Point3d test = new Point3d(-100, 100, 0);
         int count = 0;
         Point3d origin = new Point3d(-200, 0, 0);
-        Cuboid bruh = new Cuboid(-50, -50, -200, 100, 100, 100);
+        Cuboid bruh = new Cuboid(-50, -50, -400, 100, 100, 100, gui);
         gui.background(255, 255, 255);
-        gui.drawPoint3d(test);
-        gui.drawPoint3d(origin);
         bruh.rotateCY(Math.PI / 4);
         bruh.rotateCX(Math.PI / 4);
         Timer t = new Timer(17, new ActionPerformer(){
             public void actionPerformed(ActionEvent e){
                 gui.background(220, 220, 220);
-                //gui.drawPoint3d(test);
-                //gui.drawPoint3d(origin);
+                bruh.rotateCY(0.005);
+                bruh.rotateCZ(0.002);
+                
                 gui.drawCuboid(bruh);
-                bruh.rotateCY(0.02);
-                bruh.move(0, 0, -1);
                 
  
             }

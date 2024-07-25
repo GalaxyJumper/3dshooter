@@ -31,6 +31,18 @@ public class Point3d {
         this.y += y;
         this.z += z;
     }
+    public void moveTo(double x, double y, double z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    public Point3d toPersp(double focalLength){
+        return new Point3d(
+            (x * focalLength) / (z + focalLength),
+            (y * focalLength) / (z + focalLength),
+            z
+        ); 
+    }
     // Rotate this about the X axis of th 
     public void rotateAboutZ(Point3d point, double theta){
         double dx = this.x - point.x();
@@ -56,7 +68,18 @@ public class Point3d {
     public boolean isCulled(){
         return isCulled;
     }
+    public Point3d flip(){
+        return new Point3d(-x, -y, z);
+    }
+    
     public static double dist3d(double x1, double y1, double z1, double x2, double y2, double z2){
         return Math.sqrt(((x2-x1)*(x2-x1)) + ((y2-y1)*(y2-y1)) + ((z2-z1)*(z2-z1)));
+    }
+    public static double dist3d(Point3d p1, Point3d p2){
+
+        return Math.sqrt(((p2.x()-p1.x())*(p2.x()-p1.x())) + ((p2.y()-p1.y())*(p2.y()-p1.y())) + ((p2.z()-p1.z())*(p2.z()-p1.z())));
+    }
+    public static double dist2d(Point3d p1, Point3d p2){
+        return Math.sqrt(((p2.x()-p1.x())*(p2.x()-p1.x())) + ((p2.y()-p1.y())*(p2.y()-p1.y())));
     }
 }   
