@@ -1,8 +1,15 @@
+import java.awt.Color;
 public class Face3d {
     Point3d[] verts;
     boolean isCulled = false;
-    public Face3d(Point3d[] verts){
+    double distToCamera;
+    double focalLength;
+    Color color;
+    public Face3d(Point3d[] verts, double focalLength, Color color){
         this.verts = verts;
+        this.focalLength = focalLength;
+        distToCamera = Point3d.dist3d(getVisualCenter(), new Point3d(0, 0, focalLength));
+        this.color = color;
     }
     public Point3d[] getVerts() {
         return this.verts;
@@ -20,11 +27,30 @@ public class Face3d {
         return verts.length;
     }
     public void move(double x, double y, double z){
+        Point3d farthestVert = verts[0];
         for(int i = 0; i < verts.length; i++){
             verts[i].move(x, y, z);
         }
+        distToCamera = Point3d.dist3d(getVisualCenter(), new Point3d(0, 0, -focalLength));
     }
-    public Point3d getSurfaceNormal(Point3d relativeCenter, double focalLength, Gui gui){
+    public boolean contains(Point3d p){
+        for(Point3d point : verts){
+            if(point.equals(p)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public Point3d getFarthestVert(){
+        Point3d farthestVert = verts[0];
+        Point3d camera = new Point3d(0, 0, focalLength);
+        for(int i = 1; i < verts.length; i++){
+            if(Point3d.dist3d(verts[i], camera) > Point3d.dist3d(farthestVert, camera))
+                farthestVert = verts[i];
+        }
+        return farthestVert;
+    }
+    public Point3d getSurfaceNormal(Point3d relativeCenter, Gui gui){
             double avgX = 0;
             double avgY = 0;
             double avgZ = 0;
@@ -47,14 +73,13 @@ public class Face3d {
                 (faceCenter.z() - relativeCenter.z()) / magnitude
             );
     }
-    public Point3d getVisualCenter(double focalLength, Gui gui){
+    public Point3d getVisualCenter(){
         double avgX = 0;
         double avgY = 0;
         double avgZ = 0;
         Point3d p;
         for(int i = 0; i < verts.length; i++){
             p = verts[i].toPersp(focalLength);
-            gui.drawPoint3d(p, 999);     
             avgX += p.x();
             avgY += p.y();
             avgZ += p.z();
@@ -65,5 +90,11 @@ public class Face3d {
         Point3d faceCenter = new Point3d(avgX, avgY, avgZ);  
         
         return faceCenter;
-}
+    }
+    public double getCameraDist(){
+        return distToCamera;
+    }
+    public Color color(){
+        return this.color;
+    }
 }

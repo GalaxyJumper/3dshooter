@@ -64,29 +64,19 @@ public class Gui extends JPanel implements ActionListener{
             }
         });
     }
-    public void drawCuboidFace(Cuboid c, int index, Color col){
+    public void drawCuboidFace(Cuboid c, int index){
         drawQueue.add(new GraphicsRunnable() {
             public void draw(Graphics2D g2d){
-                for(int i = 0; i < 6; i++){
-                    c.drawFace(g2d, index, col, focalLength);
-                }
+                c.drawFace(g2d, index, focalLength);
             }
-            
         });
     }
     public void drawCuboid(Cuboid c){
-        Color[] colors = {
-            new Color(255, 255, 0, 150),
-            new Color(255, 175, 175, 150),
-            new Color(255, 175, 0, 150),
-            new Color(0, 255, 255, 150),
-            new Color(255, 0, 255, 150),
-            new Color(255, 0, 0, 150)
-        };
+
         
 
         for(int i = 0; i < 6; i++){
-            drawCuboidFace(c, i, colors[i]);
+            drawCuboidFace(c, i);
         }
         for(int i = 0; i < 8; i++){
             drawPoint3d(c.getPoint(i).flip(), i);
