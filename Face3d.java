@@ -5,11 +5,13 @@ public class Face3d {
     double distToCamera;
     double focalLength;
     Color color;
-    public Face3d(Point3d[] verts, double focalLength, Color color){
+    boolean useInvertedCullingLogic;
+    public Face3d(Point3d[] verts, double focalLength, Color color, boolean inverted){
         this.verts = verts;
         this.focalLength = focalLength;
-        distToCamera = Point3d.dist3d(getVisualCenter(), new Point3d(0, 0, focalLength));
+        distToCamera = Point3d.dist3d(getFarthestVert(), new Point3d(0, 0, focalLength));
         this.color = color;
+        this.useInvertedCullingLogic = inverted;
     }
     public Point3d[] getVerts() {
         return this.verts;
@@ -31,7 +33,7 @@ public class Face3d {
         for(int i = 0; i < verts.length; i++){
             verts[i].move(x, y, z);
         }
-        distToCamera = Point3d.dist3d(getVisualCenter(), new Point3d(0, 0, -focalLength));
+        distToCamera = Point3d.dist3d(getFarthestVert(), new Point3d(0, 0, -focalLength));
     }
     public boolean contains(Point3d p){
         for(Point3d point : verts){
@@ -96,5 +98,8 @@ public class Face3d {
     }
     public Color color(){
         return this.color;
+    }
+    public boolean usesInvertedCullingLogic(){
+        return useInvertedCullingLogic;
     }
 }

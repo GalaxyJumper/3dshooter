@@ -8,6 +8,11 @@ public class Point3d {
         this.y = y;
         this.z = z;
     } // bruder
+    public Point3d(){
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+    } // bruder
     public double x(){
         return this.x;
     }
@@ -81,5 +86,9 @@ public class Point3d {
     }
     public static double dist2d(Point3d p1, Point3d p2){
         return Math.sqrt(((p2.x()-p1.x())*(p2.x()-p1.x())) + ((p2.y()-p1.y())*(p2.y()-p1.y())));
+    }
+    @Override
+    public String toString(){
+        return "(" + this.x + ", " + this.y + ", " + this.z + ")";
     }
 }   

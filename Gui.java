@@ -21,7 +21,7 @@ public class Gui extends JPanel implements ActionListener{
         frameTimer = new Timer(17, this);
         frameTimer.start();
         this.repaint();
-        focalLength = 200;
+        focalLength = -400;
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -40,6 +40,14 @@ public class Gui extends JPanel implements ActionListener{
             }
         });
     }
+    public void displayFPS(int n){
+        drawQueue.add(new GraphicsRunnable() {
+            public void draw(Graphics2D g2d){
+                g2d.setColor(new Color(0, 0, 0));
+                g2d.drawString(String.valueOf(n), 40, 60);
+            }
+        });
+    }
     public void drawPoint3d(Point3d p, int num){
         Point3d point = p.toPersp(focalLength);
         drawQueue.add(new GraphicsRunnable(){
@@ -53,7 +61,7 @@ public class Gui extends JPanel implements ActionListener{
         });
     }
     public void drawPoint3d(Point3d p, int num, Color color){
-        Point3d point = p.toPersp(focalLength).flip();
+        Point3d point = p.toPersp(focalLength);
         drawQueue.add(new GraphicsRunnable(){
             public void draw(Graphics2D g2d){
                 g2d.setColor(color);
@@ -78,13 +86,16 @@ public class Gui extends JPanel implements ActionListener{
         for(int i = 0; i < 6; i++){
             drawCuboidFace(c, i);
         }
-        for(int i = 0; i < 8; i++){
-            drawPoint3d(c.getPoint(i).flip(), i);
-        }
-        
+        //for(int i = 0; i < 8; i++){
+        //    drawPoint3d(c.getPoint(i).flip(), i);
+        //}
+        drawPoint3d(c.center, 987);
+        drawPoint3d(c.getVisualCenter(), 255);
         c.cull();
 
     }
+    public double width() { return width; }
+    public double height() { return height; }
     public double getFocalLength(){
         return focalLength;
     }
