@@ -3,25 +3,29 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.*;
 public class Gui extends JPanel implements ActionListener{
+    public static final double FOCAL_LENGTH = -400; 
     int width;
     int height;
     ArrayList<GraphicsRunnable> drawQueue;
     Timer frameTimer;
-    double focalLength;
-    public Gui(int width, int height, JFrame frame){
+    JFrame frame = new JFrame("3dshooter");
+    public Gui(int width, int height){
         this.width = width;
         this.height = height;
+
         this.setSize(width, height);
         frame.setSize(width, height);
+
         frame.setVisible(true);
         this.setVisible(true);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
+
         drawQueue = new ArrayList<GraphicsRunnable>();
         frameTimer = new Timer(17, this);
         frameTimer.start();
         this.repaint();
-        focalLength = -400;
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -49,33 +53,47 @@ public class Gui extends JPanel implements ActionListener{
         });
     }
     public void drawPoint3d(Point3d p, int num){
-        Point3d point = p.toPersp(focalLength);
+        Point3d point = p.toPersp(FOCAL_LENGTH);
         drawQueue.add(new GraphicsRunnable(){
             public void draw(Graphics2D g2d){
                 g2d.setColor(Color.BLACK);
                 g2d.setStroke(new BasicStroke(4f));
-                g2d.drawLine((int)point.x() + 400, (int)point.y() + 400, (int)point.x() + 400, (int)point.y() + 400);
-                g2d.drawString("" + num, (int)point.x() + 400, (int)point.y() + 400);
+                g2d.drawLine((int)point.x() + 640, (int)point.y() + 360, (int)point.x() + 640, (int)point.y() + 360);
+                g2d.drawString("" + num, (int)point.x() + 640, (int)point.y() + 360);
                 
             }
         });
     }
     public void drawPoint3d(Point3d p, int num, Color color){
-        Point3d point = p.toPersp(focalLength);
+        Point3d point = p.toPersp(FOCAL_LENGTH);
         drawQueue.add(new GraphicsRunnable(){
             public void draw(Graphics2D g2d){
                 g2d.setColor(color);
                 g2d.setStroke(new BasicStroke(9f));
-                g2d.drawLine((int)point.x() + 400, (int)point.y() + 400, (int)point.x() + 400, (int)point.y() + 400);
-                g2d.drawString("" + num, (int)point.x() + 400, (int)point.y() + 400);
+                g2d.drawLine((int)point.x() + 640, (int)point.y() + 360, (int)point.x() + 640, (int)point.y() + 360);
+                g2d.drawString("" + num, (int)point.x() + 640, (int)point.y() + 360);
                 
             }
         });
     }
-    public void drawCuboidFace(Cuboid c, int index){
+
+    public void drawFace3d(Face3d face){
         drawQueue.add(new GraphicsRunnable() {
             public void draw(Graphics2D g2d){
-                c.drawFace(g2d, index, focalLength);
+                if(face.isCulled()) return;
+                int[] xPoints = new int[4];
+                int[] yPoints = new int[4];
+                double pointX;
+                double pointY;
+                Point3d point;    
+        
+                for(int i = 0; i < face.numVerts(); i++){
+                    point = face.getVert(i).toPersp(Gui.FOCAL_LENGTH);
+                    xPoints[i] = (int)(point.x() + 640);
+                    yPoints[i] = (int)(point.y() + 360);
+                }
+                g2d.setColor(face.color());
+                g2d.fillPolygon(xPoints, yPoints, 4);
             }
         });
     }
@@ -84,7 +102,7 @@ public class Gui extends JPanel implements ActionListener{
         
 
         for(int i = 0; i < 6; i++){
-            drawCuboidFace(c, i);
+            drawFace3d(c.getFace(i));
         }
         //for(int i = 0; i < 8; i++){
         //    drawPoint3d(c.getPoint(i).flip(), i);
@@ -97,7 +115,7 @@ public class Gui extends JPanel implements ActionListener{
     public double width() { return width; }
     public double height() { return height; }
     public double getFocalLength(){
-        return focalLength;
+        return FOCAL_LENGTH;
     }
     public void actionPerformed(ActionEvent e){
         this.repaint();
