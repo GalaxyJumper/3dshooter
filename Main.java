@@ -2,6 +2,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import java.util.ArrayList;
+/* TODO LIST:
+ * 
+ *  Create face list + sorting
+ *  Add lighting
+ *  Fix weird perspective distortion
+ */
 class Main{
     public static void main(String[] args) {
         Gui gui = new Gui(1280, 720);
