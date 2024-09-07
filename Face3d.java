@@ -25,7 +25,6 @@ public class Face3d {
         return verts.length;
     }
     public void move(double x, double y, double z){
-        Point3d farthestVert = verts[0];
         for(int i = 0; i < verts.length; i++){
             verts[i].move(x, y, z);
         }

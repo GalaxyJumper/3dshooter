@@ -42,12 +42,29 @@ public class Point3d {
         this.z = z;
     }
     public Point3d toPersp(double focalLength){
-        return new Point3d(
-            (x * focalLength) / (z + focalLength),
-            (y * focalLength) / (z + focalLength),
-            z
-        ); 
+        Point3d point = this;
+                
+        if(point.z() > -Gui.FOCAL_LENGTH){
+            point = point.flip();
+            point = new Point3d(
+                (point.x() * focalLength) * (point.z() + focalLength),
+                (point.y() * focalLength) * (point.z() + focalLength),
+                point.z()
+            ); 
+        } else {
+            point = new Point3d(
+                (point.x() * focalLength) / (point.z() + focalLength),
+                (point.y() * focalLength) / (point.z() + focalLength),
+                point.z()
+            ); 
+        }
+
+
+        
+
+        return point;
     }
+    
     // Rotate this about the X axis of th 
     public void rotateAboutZ(Point3d point, double theta){
         double dx = this.x - point.x();

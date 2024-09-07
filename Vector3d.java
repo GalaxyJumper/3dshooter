@@ -6,4 +6,11 @@ public class Vector3d {
     public Vector3d(double x, double y, double z){
 
     }
+    /*public static double add(Vector3d v){
+
+    }
+    public static double dotProduct(){
+
+    }
+    */
 }

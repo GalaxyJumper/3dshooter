@@ -98,11 +98,12 @@ public class Cuboid {
             for(int k = 0; k < 4; k++){
                 // Get the vert at k and the vert after it (vert 0 is after vert 3)
                 vert1 = faces[i].getVert(k).toPersp(Gui.FOCAL_LENGTH);
+                
                 vert2 = faces[i].getVert((k + 1) % 4).toPersp(Gui.FOCAL_LENGTH);
 
                 // Is the vert at k onscreen? If so this face is onscreen.
                 if(vert1.x() + 640 >= 0 && vert1.x() + 640 <= gui.width() &&
-                   vert1.y() + 360 >= 0 && vert1.y() + 360 <= gui.height()) {
+                   vert1.y() + 360 >= 0 && vert1.y() + 360 <= gui.height() && vert1.z() <= -Gui.FOCAL_LENGTH) {
                     isVisible = true;
                 }
                 // Determine winding order between this vert and the vert after it.
@@ -111,9 +112,9 @@ public class Cuboid {
                 sum += (vert1.x() - vert2.x()) * (vert1.y() + vert2.y());
             }
             
-            //if(!isVisible){
-            //    faces[i].setCulled(true);
-            //}
+            if(!isVisible){
+                faces[i].setCulled(true);
+            }
             // Some faces face backwards at first and require inverted logic.
             if(((faces[i].usesInvertedCullingLogic())? (sum < 0) : (sum > 0))){
                 faces[i].setCulled(true);

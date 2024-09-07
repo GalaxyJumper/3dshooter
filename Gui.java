@@ -2,12 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.*;
-public class Gui extends JPanel implements ActionListener{
+public class Gui extends JPanel{
     public static final double FOCAL_LENGTH = -400; 
     int width;
     int height;
     ArrayList<GraphicsRunnable> drawQueue;
-    Timer frameTimer;
     JFrame frame = new JFrame("3dshooter");
     public Gui(int width, int height){
         this.width = width;
@@ -23,9 +22,6 @@ public class Gui extends JPanel implements ActionListener{
         frame.add(this);
 
         drawQueue = new ArrayList<GraphicsRunnable>();
-        frameTimer = new Timer(17, this);
-        frameTimer.start();
-        this.repaint();
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -65,7 +61,7 @@ public class Gui extends JPanel implements ActionListener{
         });
     }
     public void drawPoint3d(Point3d p, int num, Color color){
-        Point3d point = p.toPersp(FOCAL_LENGTH);
+        Point3d point = p;//.toPersp(FOCAL_LENGTH);
         drawQueue.add(new GraphicsRunnable(){
             public void draw(Graphics2D g2d){
                 g2d.setColor(color);
@@ -86,7 +82,7 @@ public class Gui extends JPanel implements ActionListener{
                 double pointX;
                 double pointY;
                 Point3d point;    
-        
+                String debug;
                 for(int i = 0; i < face.numVerts(); i++){
                     point = face.getVert(i).toPersp(Gui.FOCAL_LENGTH);
                     xPoints[i] = (int)(point.x() + 640);
@@ -104,9 +100,9 @@ public class Gui extends JPanel implements ActionListener{
         for(int i = 0; i < 6; i++){
             drawFace3d(c.getFace(i));
         }
-        //for(int i = 0; i < 8; i++){
-        //    drawPoint3d(c.getPoint(i).flip(), i);
-        //}
+        for(int i = 0; i < 8; i++){
+            drawPoint3d(c.getVert(i), i);
+        }
         drawPoint3d(c.center, 987);
         drawPoint3d(c.getVisualCenter(), 255);
         c.cull();
@@ -116,8 +112,5 @@ public class Gui extends JPanel implements ActionListener{
     public double height() { return height; }
     public double getFocalLength(){
         return FOCAL_LENGTH;
-    }
-    public void actionPerformed(ActionEvent e){
-        this.repaint();
     }
 }
