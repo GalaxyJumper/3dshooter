@@ -1,13 +1,15 @@
 import java.awt.Color;
-public class Face3d {
+public class Face3d{
     Point3d[] verts;
     boolean isCulled = false;
     Color color;
     boolean useInvertedCullingLogic;
-    public Face3d(Point3d[] verts, Color color, boolean inverted){
+    Point3d shapeCenter;
+    public Face3d(Point3d[] verts, Color color, boolean inverted, Point3d shapeCenter){
         this.verts = verts;
         this.color = color;
         this.useInvertedCullingLogic = inverted;
+        this.shapeCenter = shapeCenter;
     }
     public Point3d[] getVerts() {
         return this.verts;
@@ -46,14 +48,13 @@ public class Face3d {
         }
         return farthestVert;
     }
-    public Point3d getSurfaceNormal(Point3d relativeCenter, Gui gui){
+    public Point3d getSurfaceNormal(Point3d relativeCenter){
             double avgX = 0;
             double avgY = 0;
             double avgZ = 0;
             Point3d p;
             for(int i = 0; i < verts.length; i++){
                 p = verts[i].toPersp(Gui.FOCAL_LENGTH);
-                gui.drawPoint3d(p, 999);     
                 avgX += p.x();
                 avgY += p.y();
                 avgZ += p.z();
@@ -87,8 +88,38 @@ public class Face3d {
         
         return faceCenter;
     }
+    public Color calcLighting(Point3d lightSource, double intensity){
+        Point3d center = getVisualCenter();
+        Point3d vLightSource = new Point3d(
+            (lightSource.x() - center.x()) / Point3d.dist3d(lightSource, center),
+            (lightSource.y() - center.y()) / Point3d.dist3d(lightSource, center),
+            (lightSource.z() - center.z()) / Point3d.dist3d(lightSource, center)
+        );
+        Point3d vSurfNorm = getSurfaceNormal(shapeCenter);
+        double dotProduct = ((vSurfNorm.x() * vLightSource.x()) + 
+                            (vSurfNorm.y() * vLightSource.y()) +
+                            (vSurfNorm.z() * vLightSource.z())) * intensity;
+        Color trueColor;
+        if(dotProduct > 0){
+            trueColor = new Color(
+                color.getRed() + (int)((255 - (color.getRed())) * dotProduct),
+                color.getGreen() + (int)((255 - (color.getGreen())) * dotProduct),
+                color.getBlue() + (int)((255 - (color.getBlue())) * dotProduct)
+            ); 
+        } else {
+            trueColor = new Color(
+                color.getRed() + (int)(((color.getRed())) * dotProduct),
+                color.getGreen() + (int)(((color.getGreen())) * dotProduct),
+                color.getBlue() + (int)(((color.getBlue())) * dotProduct)
+            ); 
+        }
+        return trueColor;
+    }   
     public Color color(){
         return this.color;
+    }
+    public void setShapeCetner(Point3d newCenter){
+        this.shapeCenter = newCenter;
     }
     public boolean usesInvertedCullingLogic(){
         return useInvertedCullingLogic;

@@ -1,4 +1,4 @@
-public class Point3d {
+public class Point3d{
     private double x;
     private double y;
     private double z;
