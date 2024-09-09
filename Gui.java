@@ -126,9 +126,11 @@ public class Gui extends JPanel{
         for(int i = 0; i < 6; i++){
             drawFace3d(c.getFace(i));
         }
+        */
         for(int i = 0; i < 8; i++){
             drawPoint3d(c.getVert(i), i);
         }
+        /*
         drawPoint3d(c.center, 987);
         drawPoint3d(c.getVisualCenter(), 255);
         c.cull();
