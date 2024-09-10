@@ -1,16 +1,28 @@
 import java.awt.MouseInfo;
 import java.awt.event.*;
 public class InputManager implements MouseListener, KeyListener{
-    MouseEvent lastEvent;
+    double lastX, lastY, mouseX, mouseY;
     public InputManager(){
-        this.lastEvent = new MouseEvent(null, 0, 0, 0, 0, 0, 0, false);
-        
+       lastX = MouseInfo.getPointerInfo().getLocation().getX();
+       lastY = MouseInfo.getPointerInfo().getLocation().getY();
+       mouseX = MouseInfo.getPointerInfo().getLocation().getX();;
+       mouseY = MouseInfo.getPointerInfo().getLocation().getY();
     }
     public double mouseX(){
-        return MouseInfo.getPointerInfo().getLocation().getX();
+        lastX = mouseX;
+        mouseX = MouseInfo.getPointerInfo().getLocation().getX();
+        return mouseX;
     }
     public double mouseY(){
-        return MouseInfo.getPointerInfo().getLocation().getY();
+        lastY = mouseY;
+        mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+        return mouseY;
+    }
+    public double dMouseX(){
+        return mouseX - lastX;
+    }
+    public double dMouseY(){
+        return mouseY - lastY;
     }
     @Override
     public void mouseClicked(MouseEvent e) {
