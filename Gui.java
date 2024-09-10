@@ -7,13 +7,17 @@ public class Gui extends JPanel{
     public static final double FOCAL_LENGTH = -400; 
     int width;
     int height;
+    
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
     ArrayList<GraphicsRunnable> drawQueue;
     JFrame frame = new JFrame("3dshooter");
     ArrayList<Face3d> polys = new ArrayList<Face3d> (); // All of the polygons to be drawn in the scene
     Point3d lightSource = new Point3d(300, 0, 0);
     public Gui(int width, int height){
-        this.width = width;
-        this.height = height;
+        this.width = WIDTH;
+        this.height = HEIGHT;
+        
 
         this.setSize(width, height);
         frame.setSize(width, height);

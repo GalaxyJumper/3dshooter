@@ -6,8 +6,11 @@
  *  Fix weird perspective distortion
  *  Setup input nonsense [1]
  */
+
+import java.awt.AWTException;
+
 class Main{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AWTException{
         new GameManager();
     }
 }

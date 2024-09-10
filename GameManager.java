@@ -1,5 +1,7 @@
 import javax.swing.Timer;
 import java.awt.event.*;
+import java.awt.AWTException;
+import java.awt.Robot;
 public class GameManager implements ActionListener{
     Gui gui;
     InputManager input;
@@ -7,7 +9,7 @@ public class GameManager implements ActionListener{
     double now, lastSecond, frameRate, framesLastSecond;
     Timer gameLoop;
     double rotateX, rotateY;
-    public GameManager(){
+    public GameManager() throws AWTException{
         gui = new Gui(1280, 720);
         input = new InputManager();
         bruh = new Cuboid(-50, -50, -50, 100, 100, 100, gui); 
@@ -53,7 +55,6 @@ public class GameManager implements ActionListener{
         }
         now = System.currentTimeMillis();
         gui.drawPolys();
-        gui.repaint();
     }
     
 }

@@ -1,6 +1,6 @@
 import java.awt.MouseInfo;
 import java.awt.event.*;
-public class InputManager implements MouseListener, KeyListener{
+public class InputManager implements MouseListener, KeyListener, MouseMotionListener{
     double lastX, lastY, mouseX, mouseY;
     public InputManager(){
        lastX = MouseInfo.getPointerInfo().getLocation().getX();
@@ -23,6 +23,10 @@ public class InputManager implements MouseListener, KeyListener{
     }
     public double dMouseY(){
         return mouseY - lastY;
+    }
+    @Override
+    public void mouseMoved(MouseEvent e){
+        
     }
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -58,6 +62,10 @@ public class InputManager implements MouseListener, KeyListener{
     }
     @Override
     public void keyReleased(KeyEvent e) {
+
+    }
+    @Override
+    public void mouseDragged(MouseEvent e){
 
     }
     
