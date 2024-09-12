@@ -31,6 +31,8 @@ public class InputManager implements MouseListener, KeyListener, MouseMotionList
             mouseY = MouseInfo.getPointerInfo().getLocation().getY();
             System.out.println("hello bois");
             if(mouseX < 200 || mouseX > 1080 || mouseY < 200 || mouseY > 520){
+                movedX = 640 - mouseX;
+                movedY = 360 - mouseY;
                 robot.mouseMove(640, 360);
                 automatedMove = true;
             }
