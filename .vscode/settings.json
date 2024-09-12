@@ -2,7 +2,5 @@
     "java.project.sourcePaths": [
         "."
     ],
-    "java.project.referencedLibraries": [
-        "lwjgl\\lwjgl.jar"
-    ]
+    "java.project.referencedLibraries": []
 }

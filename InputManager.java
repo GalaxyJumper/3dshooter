@@ -4,20 +4,41 @@ import java.awt.event.*;
 import java.awt.Robot;
 public class InputManager implements MouseListener, KeyListener, MouseMotionListener{
     double lastX, lastY, mouseX, mouseY;
-    Mouse grabber;
+    Robot robot;
+    boolean automatedMove;
+    double movedX, movedY;
     public InputManager() throws AWTException{
        lastX = MouseInfo.getPointerInfo().getLocation().getX();
        lastY = MouseInfo.getPointerInfo().getLocation().getY();
        mouseX = MouseInfo.getPointerInfo().getLocation().getX();
        mouseY = MouseInfo.getPointerInfo().getLocation().getY();
-       grabber = new Mouse();
-       grabber.setGrabbed();
+       robot = new Robot();
+       automatedMove = false;
+       movedX = 0;
+       movedY = 0;
     }
     public double mouseX(){
         return mouseX;
     }
     public double mouseY(){
         return mouseY;
+    }
+    public void updateMouse(){
+        if(!automatedMove){
+            lastX = mouseX;
+            lastY = mouseY;
+            mouseX = MouseInfo.getPointerInfo().getLocation().getX();
+            mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+            System.out.println("hello bois");
+            if(mouseX < 200 || mouseX > 1080 || mouseY < 200 || mouseY > 520){
+                robot.mouseMove(640, 360);
+                automatedMove = true;
+            }
+        } else if(automatedMove){
+            mouseX = MouseInfo.getPointerInfo().getLocation().getX();
+            mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+            automatedMove = false;
+        }
     }
     public double dMouseX(){
         return mouseX - lastX;

@@ -1,7 +1,6 @@
 import javax.swing.Timer;
 import java.awt.event.*;
 import java.awt.AWTException;
-import java.awt.Robot;
 public class GameManager implements ActionListener{
     Gui gui;
     InputManager input;
@@ -9,9 +8,7 @@ public class GameManager implements ActionListener{
     double now, lastSecond, frameRate, framesLastSecond;
     Timer gameLoop;
     double rotateX, rotateY;
-    Robot robot;
     public GameManager() throws AWTException{
-        robot = new Robot();
         input = new InputManager();
         gui = new Gui(1280, 720, input);
         bruh = new Cuboid(-50, -50, -50, 100, 100, 100, gui); 
@@ -30,11 +27,9 @@ public class GameManager implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         now = System.currentTimeMillis();
-        input.mouseX();
-        input.mouseY();
+        input.updateMouse(); 
         rotateX = input.dMouseX();
         rotateY = input.dMouseY();
-        robot.mouseMove(680, 360);
 
         bruh.rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
         bruh.rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
