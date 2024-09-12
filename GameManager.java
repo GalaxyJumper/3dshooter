@@ -9,9 +9,11 @@ public class GameManager implements ActionListener{
     double now, lastSecond, frameRate, framesLastSecond;
     Timer gameLoop;
     double rotateX, rotateY;
+    Robot robot;
     public GameManager() throws AWTException{
-        gui = new Gui(1280, 720);
+        robot = new Robot();
         input = new InputManager();
+        gui = new Gui(1280, 720, input);
         bruh = new Cuboid(-50, -50, -50, 100, 100, 100, gui); 
 
         now = System.currentTimeMillis();
@@ -32,6 +34,7 @@ public class GameManager implements ActionListener{
         input.mouseY();
         rotateX = input.dMouseX();
         rotateY = input.dMouseY();
+        robot.mouseMove(680, 360);
 
         bruh.rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
         bruh.rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
@@ -55,6 +58,7 @@ public class GameManager implements ActionListener{
         }
         now = System.currentTimeMillis();
         gui.drawPolys();
+        gui.repaint();
     }
     
 }
