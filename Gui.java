@@ -25,8 +25,9 @@ public class Gui extends JPanel{
         frame.setVisible(true);
         this.setVisible(true);
 
-        this.addMouseMotionListener(input);
-        this.addKeyListener(input);
+        frame.addMouseMotionListener(input);
+        frame.addKeyListener(input);
+        frame.setFocusable(true);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);

@@ -43,7 +43,7 @@ public class GameManager implements ActionListener{
         gui.background(220, 220, 220);
         gui.displayFPS((int)(frameRate));
         //bruh.rotateAboutY(new Point3d(0, 0, 400), 0.01);
-        //bruh.move(1, 0, 0);
+        //bruh.move(1, 0, 0); 
         gui.drawPoint3d(gui.getLightSource(), 999);
 
         if(now - lastSecond > 1000){

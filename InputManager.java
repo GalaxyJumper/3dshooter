@@ -27,7 +27,7 @@ public class InputManager implements MouseListener, KeyListener, MouseMotionList
     }
     public void updateMouse(){
         // If the user moves the mouse...
-        if(!automatedMove){
+        if(!automatedMove && mouseLocked){
             // Update last pos
             lastX = mouseX;
             lastY = mouseY;
@@ -45,7 +45,7 @@ public class InputManager implements MouseListener, KeyListener, MouseMotionList
                 // Notify the program that this was a robot moving the mouse.
                 automatedMove = true;
             }
-        } else if(automatedMove){
+        } else if(automatedMove && mouseLocked){
             // Adjust for the shift to the center, so that the camera doesn't "jump" when the mouse gets moved to center.
             lastX = mouseX + movedX;
             lastY = mouseY + movedY;
@@ -92,12 +92,12 @@ public class InputManager implements MouseListener, KeyListener, MouseMotionList
     }
     @Override
     public void keyTyped(KeyEvent e) {
+        if(e.getKeyCode() == 69){
             mouseLocked = !mouseLocked;
-            System.out.println("Locked/unlocked moues");
+        }
     }
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("broder");
     }
     @Override
     public void keyReleased(KeyEvent e) {
