@@ -13,7 +13,7 @@ public class Gui extends JPanel{
     ArrayList<GraphicsRunnable> drawQueue;
     JFrame frame = new JFrame("3dshooter");
     ArrayList<Face3d> polys = new ArrayList<Face3d> (); // All of the polygons to be drawn in the scene
-    Point3d lightSource = new Point3d(300, 0, 0);
+    Point3d lightSource = new Point3d(0, 0, 0);
     public Gui(int width, int height, InputManager input){
         this.width = WIDTH;
         this.height = HEIGHT;
@@ -26,6 +26,7 @@ public class Gui extends JPanel{
         this.setVisible(true);
 
         this.addMouseMotionListener(input);
+        this.addKeyListener(input);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
