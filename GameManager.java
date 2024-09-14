@@ -39,7 +39,23 @@ public class GameManager implements ActionListener{
             gui.drawCuboid(cuboids[i]);
             gui.rotateLightAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
             gui.rotateLightAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
+            if(input.getKey(87)){
+                cuboids[i].move(0, 0, 1);
+            } else if(input.getKey(83)){
+                cuboids[i].move(0, 0, -1);
+            }
+            if(input.getKey(65)){
+                cuboids[i].move(1, 0, 0);
+            } else if(input.getKey(68)){
+                cuboids[i].move(-1, 0, 0);
+            }
+            if(input.getKey(32)){
+                cuboids[i].move(0, 1, 0);
+            } else if(input.getKey(17)){
+                cuboids[i].move(0, -1, 0);
+            }
         }
+
         gui.background(220, 220, 220);
         gui.displayFPS((int)(frameRate));
         //bruh.rotateAboutY(new Point3d(0, 0, 400), 0.01);

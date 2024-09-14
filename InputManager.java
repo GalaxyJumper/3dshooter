@@ -8,6 +8,7 @@ public class InputManager implements MouseListener, KeyListener, MouseMotionList
     boolean automatedMove;
     double movedX, movedY;
     boolean mouseLocked;
+    boolean[] keys = new boolean[90];
     public InputManager() throws AWTException{
        lastX = MouseInfo.getPointerInfo().getLocation().getX();
        lastY = MouseInfo.getPointerInfo().getLocation().getY();
@@ -56,6 +57,9 @@ public class InputManager implements MouseListener, KeyListener, MouseMotionList
             automatedMove = false;
         }
     }
+    public boolean getKey(int keyCode){
+        return keys[keyCode];
+    }
     public double dMouseX(){
         return mouseX - lastX;
     }
@@ -92,16 +96,22 @@ public class InputManager implements MouseListener, KeyListener, MouseMotionList
     }
     @Override
     public void keyTyped(KeyEvent e) {
-        if(e.getKeyCode() == 69){
-            mouseLocked = !mouseLocked;
-        }
+
     }
     @Override
     public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() < keys.length){
+            keys[e.getKeyCode()] = true;
+        }
     }
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if(e.getKeyCode() == 27){
+            mouseLocked = !mouseLocked;
+        }
+        if(e.getKeyCode() < keys.length){
+            keys[e.getKeyCode()] = false;
+        }
     }
     @Override
     public void mouseDragged(MouseEvent e){
