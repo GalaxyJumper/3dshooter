@@ -8,9 +8,10 @@ public class GameManager implements ActionListener{
     Timer gameLoop;
     double rotateX, rotateY;
     Cuboid[] cuboids;
+    Point3d playerVel;
     public GameManager() throws AWTException{
         input = new InputManager();
-
+        playerVel = new Point3d();
         now = System.currentTimeMillis();
         lastSecond = System.currentTimeMillis();
         gui = new Gui(1280, 720, input);
@@ -34,25 +35,31 @@ public class GameManager implements ActionListener{
         rotateX = input.dMouseX();
         rotateY = input.dMouseY();
         for(int i = 0; i < cuboids.length; i++){
+            cuboids[i].move(playerVel.x(), playerVel.y(), playerVel.z());
+            playerVel.moveTo(
+                playerVel.x() * 0.98,
+                playerVel.y() * 0.98,
+                playerVel.z() * 0.98
+            );
             cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
             cuboids[i].rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
             gui.drawCuboid(cuboids[i]);
             gui.rotateLightAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
             gui.rotateLightAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
             if(input.getKey(87)){
-                cuboids[i].move(0, 0, 1);
+                playerVel.move(0, 0, 0.05);
             } else if(input.getKey(83)){
-                cuboids[i].move(0, 0, -1);
+                playerVel.move(0, 0, -0.05);
             }
             if(input.getKey(65)){
-                cuboids[i].move(1, 0, 0);
+                playerVel.move(0.05, 0, 0);
             } else if(input.getKey(68)){
-                cuboids[i].move(-1, 0, 0);
+                playerVel.move(-0.05, 0, 0);
             }
             if(input.getKey(32)){
-                cuboids[i].move(0, 1, 0);
+                playerVel.move(0, 0.05, 0);
             } else if(input.getKey(17)){
-                cuboids[i].move(0, -1, 0);
+                playerVel.move(0, -0.05, 0);
             }
         }
 

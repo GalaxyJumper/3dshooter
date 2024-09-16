@@ -4,7 +4,7 @@ public class Cuboid {
     private Face3d[] faces = new Face3d[6];
     double x, y, z, width, height, depth;
     public Point3d center;
-    Point3d cameraPos = new Point3d(0, 0, Gui.FOCAL_LENGTH);
+    Point3d cameraPos = new Point3d(0, 0, 0);
     Gui gui;
     Point3d lastFarthestVert = new Point3d(0, 0, 0);
     public Cuboid(int x, int y, int z, int width, int height, int depth, Gui gui){
@@ -29,12 +29,12 @@ public class Cuboid {
         verts[6] = new Point3d(x + width, y + height, z + depth);
         verts[7] = new Point3d(x, y + height, z + depth);
         // Define faces       {vertices of this face...............................}  color of this face            does it face backward at definition (for culling)
-        faces[0] = new Face3d(new Point3d[] {verts[0], verts[1], verts[2], verts[3]}, new Color(255, 0, 0), false, this.center);
-        faces[1] = new Face3d(new Point3d[] {verts[1], verts[2], verts[6], verts[5]}, new Color(255, 0, 0), true, this.center);
-        faces[2] = new Face3d(new Point3d[] {verts[0], verts[3], verts[7], verts[4]}, new Color(255, 0, 0), false, this.center);
-        faces[3] = new Face3d(new Point3d[] {verts[0], verts[1], verts[5], verts[4]}, new Color(255, 0, 0), true, this.center);
-        faces[4] = new Face3d(new Point3d[] {verts[3], verts[2], verts[6], verts[7]}, new Color(255, 0, 0), false, this.center);
-        faces[5] = new Face3d(new Point3d[] {verts[4], verts[5], verts[6], verts[7]}, new Color(255, 0, 0), true, this.center);
+        faces[0] = new Face3d(new Point3d[] {verts[0], verts[1], verts[2], verts[3]}, new Color(0, 255, 255), false, this.center);
+        faces[1] = new Face3d(new Point3d[] {verts[1], verts[2], verts[6], verts[5]}, new Color(0, 255, 255), true, this.center);
+        faces[2] = new Face3d(new Point3d[] {verts[0], verts[3], verts[7], verts[4]}, new Color(0, 255, 255), false, this.center);
+        faces[3] = new Face3d(new Point3d[] {verts[0], verts[1], verts[5], verts[4]}, new Color(0, 255, 255), true, this.center);
+        faces[4] = new Face3d(new Point3d[] {verts[3], verts[2], verts[6], verts[7]}, new Color(0, 255, 255), false, this.center);
+        faces[5] = new Face3d(new Point3d[] {verts[4], verts[5], verts[6], verts[7]}, new Color(0, 255, 255), true, this.center);
     }
     ////////////////////////////////////////////
     // MOVEMENT & ROTATION

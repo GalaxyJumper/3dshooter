@@ -108,6 +108,10 @@ public class InputManager implements MouseListener, KeyListener, MouseMotionList
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode() == 27){
             mouseLocked = !mouseLocked;
+            lastX = MouseInfo.getPointerInfo().getLocation().getX();
+            lastY = MouseInfo.getPointerInfo().getLocation().getY();
+            mouseX = lastX;
+            mouseY = lastY;
         }
         if(e.getKeyCode() < keys.length){
             keys[e.getKeyCode()] = false;
