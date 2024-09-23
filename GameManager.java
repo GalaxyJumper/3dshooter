@@ -36,12 +36,13 @@ public class GameManager implements ActionListener{
         rotateY = input.dMouseY();
         for(int i = 0; i < cuboids.length; i++){
             cuboids[i].move(playerVel.x(), playerVel.y(), playerVel.z());
+            gui.moveLightSource(playerVel.x(), playerVel.y(), playerVel.z());
             playerVel.moveTo(
                 playerVel.x() * 0.98,
                 playerVel.y() * 0.98,
                 playerVel.z() * 0.98
             );
-            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
+            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 600);
             cuboids[i].rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
             gui.drawCuboid(cuboids[i]);
             gui.rotateLightAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
