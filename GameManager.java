@@ -8,6 +8,7 @@ public class GameManager implements ActionListener{
     Timer gameLoop;
     double rotateX, rotateY;
     Cuboid[] cuboids;
+    Cuboid[] statiCuboids; 
     Point3d playerVel;
     double[] cameraAngle;
     public GameManager() throws AWTException{
@@ -22,10 +23,12 @@ public class GameManager implements ActionListener{
             new Cuboid(-160, -50, -50, 100, 100, 100, gui), // what
             new Cuboid(-500, 500, -500, 1000, 20, 1000, gui) // floor
         };
+        Cuboid[] staticTemp = {
+            new Cuboid(450, 0, 0, 120, 120, 300, gui)
+        };
+        statiCuboids = staticTemp;
         cuboids = temp;
-        //Cuboid hat = new Cuboid(-50, -250, -50, 100, 500, 100, gui);
         gui.background(255, 255, 255);
-    //    
         gameLoop = new Timer(11, this);
         gameLoop.start();
     }
@@ -45,9 +48,12 @@ public class GameManager implements ActionListener{
                 playerVel.y() * 0.98,
                 playerVel.z() * 0.98
             );
+            // Reset the y axis so that it points up.
             cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -cameraAngle[1]);
+            // Rotate cubes.
             cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
             cuboids[i].rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
+            // Return the y axis to its former position.
             cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), cameraAngle[1]);
             gui.drawCuboid(cuboids[i]);
             if(input.getKey(87)){
