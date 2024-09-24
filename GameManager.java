@@ -9,7 +9,9 @@ public class GameManager implements ActionListener{
     double rotateX, rotateY;
     Cuboid[] cuboids;
     Point3d playerVel;
+    double[] cameraAngle;
     public GameManager() throws AWTException{
+        cameraAngle = new double[2];
         input = new InputManager();
         playerVel = new Point3d();
         now = System.currentTimeMillis();
@@ -33,20 +35,21 @@ public class GameManager implements ActionListener{
         now = System.currentTimeMillis();
         input.updateMouse(); 
         rotateX = input.dMouseX();
-        rotateY = input.dMouseY();
+        rotateY = input.dMouseY();        
+        cameraAngle[0] += rotateX / 1000;
+        cameraAngle[1] += rotateY / 1000;
         for(int i = 0; i < cuboids.length; i++){
             cuboids[i].move(playerVel.x(), playerVel.y(), playerVel.z());
-            gui.moveLightSource(playerVel.x(), playerVel.y(), playerVel.z());
             playerVel.moveTo(
                 playerVel.x() * 0.98,
                 playerVel.y() * 0.98,
                 playerVel.z() * 0.98
             );
-            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 600);
+            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -cameraAngle[1]);
+            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
             cuboids[i].rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
+            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), cameraAngle[1]);
             gui.drawCuboid(cuboids[i]);
-            gui.rotateLightAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
-            gui.rotateLightAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
             if(input.getKey(87)){
                 playerVel.move(0, 0, 0.05);
             } else if(input.getKey(83)){
