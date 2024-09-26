@@ -8,7 +8,7 @@ public class GameManager implements ActionListener{
     Timer gameLoop;
     double rotateX, rotateY;
     Cuboid[] cuboids;
-    Cuboid[] statiCuboids; 
+    Cuboid[] staticCuboids; 
     Point3d playerVel;
     double[] cameraAngle;
     public GameManager() throws AWTException{
@@ -24,9 +24,11 @@ public class GameManager implements ActionListener{
             new Cuboid(-500, 500, -500, 1000, 20, 1000, gui) // floor
         };
         Cuboid[] staticTemp = {
-            new Cuboid(450, 0, 0, 120, 120, 300, gui)
+            new Cuboid(210, 150, -200, 50, 50, 300, gui),
+            new Cuboid(200, 150, 0, 70, 100, 100, gui),
+            new Cuboid(200, 175, 20, 70, 90, 120, gui).rotated(0, 1.2466)
         };
-        statiCuboids = staticTemp;
+        staticCuboids = staticTemp;
         cuboids = temp;
         gui.background(255, 255, 255);
         gameLoop = new Timer(11, this);
@@ -41,6 +43,9 @@ public class GameManager implements ActionListener{
         rotateY = input.dMouseY();        
         cameraAngle[0] += rotateX / 1000;
         cameraAngle[1] += rotateY / 1000;
+        for(int i = 0; i < staticCuboids.length; i++){
+            gui.drawCuboid(staticCuboids[i]);
+        }
         for(int i = 0; i < cuboids.length; i++){
             cuboids[i].move(playerVel.x(), playerVel.y(), playerVel.z());
             playerVel.moveTo(

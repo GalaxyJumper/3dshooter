@@ -84,6 +84,20 @@ public class Cuboid {
         }
         center.rotateAboutZ(p, theta);
     }
+    public Cuboid rotated(double yaw, double pitch){
+        Cuboid temp = this;
+        temp.rotateX(pitch);
+        temp.rotateY(yaw);
+        return temp;
+    }
+
+    //////////////////////////
+    // DRAWING / GRAPHICS UTILITY
+    ///////////////////////////
+
+
+
+
     // Loops through each face and determines whether it is facing forward
     // or backward using winding order - loop through the vertices of said face
     // in the order you are given them and check whether they wind clockwise 
