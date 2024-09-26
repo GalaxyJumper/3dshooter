@@ -106,13 +106,13 @@ public class Gui extends JPanel{
         polys.sort(new Comparator<Face3d>(){
           public int compare(Face3d f, Face3d f2){
             f = (Face3d)f;
-                if(Point3d.dist3d(f.getFarthestVert(), new Point3d(0, 0, -Gui.FOCAL_LENGTH)) < 
-                   Point3d.dist3d(f2.getFarthestVert(), new Point3d(0, 0, -Gui.FOCAL_LENGTH))){
+                if(f.getFarthestVert().z() < f2.getFarthestVert().z()){
                     return -1;
-                }
-                else {
+                } else if(f.getFarthestVert().z() > f2.getFarthestVert().z()){
                     return 1;
-                }
+                } else {
+                   return 0;
+               }
                 
             }
         });
