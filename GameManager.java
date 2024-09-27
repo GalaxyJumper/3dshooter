@@ -41,8 +41,8 @@ public class GameManager implements ActionListener{
         input.updateMouse(); 
         rotateX = input.dMouseX();
         rotateY = input.dMouseY();        
-        cameraAngle[0] += rotateX / 1000;
-        cameraAngle[1] += rotateY / 1000;
+        cameraAngle[0] += rotateX / 800;
+        cameraAngle[1] += rotateY / 800;
         for(int i = 0; i < staticCuboids.length; i++){
             gui.drawCuboid(staticCuboids[i]);
         }
@@ -56,8 +56,8 @@ public class GameManager implements ActionListener{
             // Reset the y axis so that it points up.
             cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -cameraAngle[1]);
             // Rotate cubes.
-            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 1000);
-            cuboids[i].rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 1000);
+            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 800);
+            cuboids[i].rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 800);
             // Return the y axis to its former position.
             cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), cameraAngle[1]);
             gui.drawCuboid(cuboids[i]);

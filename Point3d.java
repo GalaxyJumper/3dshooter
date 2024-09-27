@@ -64,6 +64,9 @@ public class Point3d{
 
         return point;
     }
+    public double getCameraDist(Point3d camera){
+        return Point3d.dist3d(this, camera);
+    }
     
     // Rotate this about the X axis of th 
     public void rotateAboutZ(Point3d point, double theta){
