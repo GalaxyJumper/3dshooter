@@ -11,8 +11,10 @@ public class GameManager implements ActionListener{
     Cuboid[] staticCuboids; 
     Point3d playerVel;
     double[] cameraAngle;
+    Point3d playerPos;
     public GameManager() throws AWTException{
         cameraAngle = new double[2];
+        playerPos = new Point3d();
         input = new InputManager();
         playerVel = new Point3d();
         now = System.currentTimeMillis();
@@ -43,16 +45,18 @@ public class GameManager implements ActionListener{
         rotateY = input.dMouseY();        
         cameraAngle[0] += rotateX / 800;
         cameraAngle[1] += rotateY / 800;
+        //Player movement        
+        playerVel.moveTo(
+            playerVel.x() * 0.98,
+            playerVel.y() * 0.98,
+            playerVel.z() * 0.98
+        );
+        playerPos.move(playerVel.x(), playerVel.y(), playerVel.z());
         for(int i = 0; i < staticCuboids.length; i++){
             gui.drawCuboid(staticCuboids[i]);
         }
         for(int i = 0; i < cuboids.length; i++){
             cuboids[i].move(playerVel.x(), playerVel.y(), playerVel.z());
-            playerVel.moveTo(
-                playerVel.x() * 0.98,
-                playerVel.y() * 0.98,
-                playerVel.z() * 0.98
-            );
             // Reset the y axis so that it points up.
             cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -cameraAngle[1]);
             // Rotate cubes.

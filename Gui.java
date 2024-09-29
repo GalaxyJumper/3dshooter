@@ -106,10 +106,12 @@ public class Gui extends JPanel{
         polys.sort(new Comparator<Face3d>(){
           public int compare(Face3d f, Face3d f2){
             f = (Face3d)f;
-            return ((Double)(f2.getFarthestVert().getCameraDist(new Point3d(0, 0, -Gui.FOCAL_LENGTH))))
-                    .compareTo((Double)f.getFarthestVert().getCameraDist(new Point3d(0, 0, -Gui.FOCAL_LENGTH)));
+            return ((Double)(f2.getFarthestVert().toPersp(Gui.FOCAL_LENGTH).getCameraDist(new Point3d(0, 0, -Gui.FOCAL_LENGTH))))
+                    .compareTo((Double)f.getFarthestVert().toPersp(Gui.FOCAL_LENGTH).getCameraDist(new Point3d(0, 0, -Gui.FOCAL_LENGTH)));
         }
     });
+    
+        
         for(int i = 0; i < polys.size(); i++){
             drawFace3d(polys.get(i));
         }
