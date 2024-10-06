@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.awt.event.*;
 public class Gui extends JPanel{
     public static final double FOCAL_LENGTH = -400; 
+    public static final Point3d CAMERA = new Point3d(0, 0, -FOCAL_LENGTH);
     int width;
     int height;
     

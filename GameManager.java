@@ -9,14 +9,10 @@ public class GameManager implements ActionListener{
     double rotateX, rotateY;
     Cuboid[] cuboids;
     Cuboid[] staticCuboids; 
-    Point3d playerVel;
-    double[] cameraAngle;
-    Point3d playerPos;
+    Camera camera;
     public GameManager() throws AWTException{
-        cameraAngle = new double[2];
-        playerPos = new Point3d();
+        camera = new Camera();
         input = new InputManager();
-        playerVel = new Point3d();
         now = System.currentTimeMillis();
         lastSecond = System.currentTimeMillis();
         gui = new Gui(1280, 720, input);
@@ -42,9 +38,9 @@ public class GameManager implements ActionListener{
         now = System.currentTimeMillis();
         input.updateMouse(); 
         rotateX = input.dMouseX();
-        rotateY = input.dMouseY();        
-        cameraAngle[0] += rotateX / 800;
-        cameraAngle[1] += rotateY / 800;
+        rotateY = input.dMouseY(); 
+        camera.rotateX(rotateX / 800);
+        camera.rotateY(rotateY / 800);
         //Player movement        
         playerVel.moveTo(
             playerVel.x() * 0.98,
