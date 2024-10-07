@@ -36,6 +36,11 @@ public class Point3d{
         this.y += y;
         this.z += z;
     }
+    public void move(Vector3d v){
+        this.x += v.x();
+        this.y += v.y();
+        this.z += v.z();
+    }
     public void moveTo(double x, double y, double z){
         this.x = x;
         this.y = y;
@@ -45,7 +50,7 @@ public class Point3d{
         Point3d point = this;
                 
         if(point.z() > -Gui.FOCAL_LENGTH){
-            point = point.flip();
+            point = point.flip2d();
             point = new Point3d(
                 (point.x() * focalLength) * (point.z() + focalLength),
                 (point.y() * focalLength) * (point.z() + focalLength),
@@ -93,8 +98,11 @@ public class Point3d{
     public boolean isCulled(){
         return isCulled;
     }
-    public Point3d flip(){
+    public Point3d flip2d(){
         return new Point3d(-x, -y, z);
+    }
+    public Point3d flip3d(){
+        return new Point3d(-x, -y, -z);
     }
     
     public static double dist3d(double x1, double y1, double z1, double x2, double y2, double z2){

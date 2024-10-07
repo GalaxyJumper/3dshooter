@@ -39,30 +39,26 @@ public class GameManager implements ActionListener{
         input.updateMouse(); 
         rotateX = input.dMouseX();
         rotateY = input.dMouseY(); 
-        camera.rotateX(rotateX / 800);
-        camera.rotateY(rotateY / 800);
-        //Player movement        
-        playerVel.moveTo(
-            playerVel.x() * 0.98,
-            playerVel.y() * 0.98,
-            playerVel.z() * 0.98
-        );
-        playerPos.move(playerVel.x(), playerVel.y(), playerVel.z());
+        camera.rotatePitch(rotateX / 800);
+        camera.rotateYaw(rotateY / 800);
+        //Player movement      
+        camera.scaleVel(0.98);
+        camera.move(camera.vel());
         for(int i = 0; i < staticCuboids.length; i++){
             gui.drawCuboid(staticCuboids[i]);
         }
         for(int i = 0; i < cuboids.length; i++){
-            cuboids[i].move(playerVel.x(), playerVel.y(), playerVel.z());
+            cuboids[i].move(camera.vel().x(), camera.vel().y(), camera.vel().z());
             // Reset the y axis so that it points up.
-            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -cameraAngle[1]);
+            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -camera.anglePitch());
             // Rotate cubes.
             cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 800);
             cuboids[i].rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 800);
             // Return the y axis to its former position.
-            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), cameraAngle[1]);
+            cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), camera.anglePitch());
             gui.drawCuboid(cuboids[i]);
             if(input.getKey(87)){
-                playerVel.move(0, 0, 0.05);
+                
             } else if(input.getKey(83)){
                 playerVel.move(0, 0, -0.05);
             }
