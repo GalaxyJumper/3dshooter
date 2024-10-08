@@ -15,10 +15,11 @@ public class Gui extends JPanel{
     JFrame frame = new JFrame("3dshooter");
     ArrayList<Face3d> polys = new ArrayList<Face3d> (); // All of the polygons to be drawn in the scene
     Point3d lightSource = new Point3d(0, 0, 0);
-    public Gui(int width, int height, InputManager input){
+    Camera camera;
+    public Gui(int width, int height, InputManager input, Camera camera){
         this.width = WIDTH;
         this.height = HEIGHT;
-        
+        this.camera = camera;
 
         this.setSize(width, height);
         frame.setSize(width, height);
@@ -44,6 +45,9 @@ public class Gui extends JPanel{
             drawQueue.get(i).draw(g2d);
         }
         drawQueue.clear();
+    }
+    public void addToQueue(GraphicsRunnable g){
+        drawQueue.add(g);
     }
     public void background(int r, int g, int b){
         drawQueue.add(new GraphicsRunnable() {
@@ -120,25 +124,38 @@ public class Gui extends JPanel{
         
     }
     public void drawCuboid(Cuboid c){
-        c.cull();
+        Cuboid temp = (Cuboid)c;
+        System.out.println();
+        System.out.println(c.x());
+        temp.cull();
+        
+        // Reset the y axis so that it points up.
+        temp.rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -camera.anglePitch());
+        //Rotate cubes.
+        temp.rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), camera.anglePitch());
+        temp.rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -camera.angleYaw());
+        // Return the y axis to its former position.
+        temp.rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), camera.anglePitch());
         for(int i = 0; i < 6; i++){
-            if(!c.getFace(i).isCulled){
-                polys.add(c.getFace(i));
+            if(!temp.getFace(i).isCulled()){
+                polys.add(temp.getFace(i));
             }
         }
         
+        System.out.println(c.x());
+        System.out.println();
         /* Might be useful later.
         for(int i = 0; i < 6; i++){
-            drawFace3d(c.getFace(i));
+            drawFace3d(temp.getFace(i));
         }
         */
         //for(int i = 0; i < 8; i++){
-        //    drawPoint3d(c.getVert(i), i);
+        //    drawPoint3d(temp.getVert(i), i);
         //}
         /*
-        drawPoint3d(c.center, 987);
-        drawPoint3d(c.getVisualCenter(), 255);
-        c.cull();
+        drawPoint3d(temp.center, 987);
+        drawPoint3d(temp.getVisualCenter(), 255);
+        temp.cull();
         */
     }
     public double width() { return width; }

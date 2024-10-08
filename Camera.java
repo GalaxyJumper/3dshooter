@@ -44,7 +44,8 @@ public class Camera {
     }
     public void addVel(double x, double y, double z){
         vel.addXComp(x);
-        // finnissshhhhhhh this
+        vel.addYComp(y);
+        vel.addZComp(z);
     }
     public Vector3d vel(){
         return this.vel;

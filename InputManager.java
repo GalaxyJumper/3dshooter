@@ -66,6 +66,9 @@ public class InputManager implements MouseListener, KeyListener, MouseMotionList
     public double dMouseY(){
         return mouseY - lastY;
     }
+    public boolean getLocked(){
+        return mouseLocked;
+    }
     @Override
     public void mouseMoved(MouseEvent e){
 

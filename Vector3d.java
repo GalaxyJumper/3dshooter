@@ -21,8 +21,10 @@ public class Vector3d {
     public double z(){
         return z;
     }
-    public Vector3d add(Vector3d v){
-        return new Vector3d(this.toPoint3d(), null);
+    public void add(Vector3d v){
+        this.x += v.x();
+        this.y += v.y();
+        this.z += v.z();
     }
     public void scale(double xFactor, double yFactor, double zFactor){
         this.x *= xFactor;
