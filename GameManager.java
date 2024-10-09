@@ -20,14 +20,14 @@ public class GameManager implements ActionListener{
         lastSecond = System.currentTimeMillis();
         gui = new Gui(1280, 720, input, camera);
         Cuboid[] temp = {
-            new Cuboid(-50, -50, -50, 100, 100, 100, gui), // bruh
-            new Cuboid(-160, -50, -50, 100, 100, 100, gui), // what
-            new Cuboid(-500, 500, -500, 1000, 20, 1000, gui) // floor
+            new Cuboid(-50, -50, -50, 100, 100, 100), // bruh
+            new Cuboid(-160, -50, -50, 100, 100, 100), // what
+            new Cuboid(-500, 500, -500, 1000, 20, 1000) // floor
         };
         Cuboid[] staticTemp = {
-            new Cuboid(210, 150, -200, 50, 50, 300, gui),
-            new Cuboid(200, 150, 0, 70, 100, 100, gui),
-            new Cuboid(200, 175, 20, 70, 90, 120, gui).rotated(0, 1.2466)
+            new Cuboid(210, 150, -200, 50, 50, 300),
+            new Cuboid(200, 150, 0, 70, 100, 100),
+            new Cuboid(200, 175, 20, 70, 90, 120).rotated(0, 1.2466)
         };
         staticCuboids = staticTemp;
         cuboids = temp;
@@ -51,7 +51,6 @@ public class GameManager implements ActionListener{
             gui.drawCuboid(staticCuboids[i]);
         }
         for(int i = 0; i < cuboids.length; i++){
-            cuboids[i].move(camera.vel().x(), camera.vel().y(), camera.vel().z());
             // Reset the y axis so that it points up.
             //cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -camera.anglePitch());
             // Rotate cubes.

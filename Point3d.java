@@ -13,6 +13,11 @@ public class Point3d{
         this.y = 0;
         this.z = 0;
     } // bruder
+    public Point3d(Point3d original){
+        this.x = original.x();
+        this.y = original.y();
+        this.z = original.z();
+    }
     public double x(){
         return this.x;
     }

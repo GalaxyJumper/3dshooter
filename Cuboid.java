@@ -5,9 +5,8 @@ public class Cuboid {
     double x, y, z, width, height, depth;
     public Point3d center;
     Point3d cameraPos = new Point3d(0, 0, 0);
-    Gui gui;
     Point3d lastFarthestVert = new Point3d(0, 0, 0);
-    public Cuboid(int x, int y, int z, int width, int height, int depth, Gui gui){
+    public Cuboid(int x, int y, int z, int width, int height, int depth){
         // Basic cuboid attributes
         this.x = x;
         this.y = y;
@@ -16,8 +15,6 @@ public class Cuboid {
         this.height = height;
         this.depth = depth;
         this.center = new Point3d(x + (width / 2), y + (height / 2), z + (depth / 2));
-        // Draw space things, mostly for culling
-        this.gui = gui;
         // Define vertices, "front" layer
         verts[0] = new Point3d(x, y, z);
         verts[1] = new Point3d(x + width, y, z);
@@ -28,6 +25,28 @@ public class Cuboid {
         verts[5] = new Point3d(x + width, y, z + depth);
         verts[6] = new Point3d(x + width, y + height, z + depth);
         verts[7] = new Point3d(x, y + height, z + depth);
+        // Define faces       {vertices of this face...............................}  color of this face            does it face backward at definition (for culling)
+        faces[0] = new Face3d(new Point3d[] {verts[0], verts[1], verts[2], verts[3]}, new Color(0, 255, 255), false, this.center);
+        faces[1] = new Face3d(new Point3d[] {verts[1], verts[2], verts[6], verts[5]}, new Color(0, 255, 255), true, this.center);
+        faces[2] = new Face3d(new Point3d[] {verts[0], verts[3], verts[7], verts[4]}, new Color(0, 255, 255), false, this.center);
+        faces[3] = new Face3d(new Point3d[] {verts[0], verts[1], verts[5], verts[4]}, new Color(0, 255, 255), true, this.center);
+        faces[4] = new Face3d(new Point3d[] {verts[3], verts[2], verts[6], verts[7]}, new Color(0, 255, 255), false, this.center);
+        faces[5] = new Face3d(new Point3d[] {verts[4], verts[5], verts[6], verts[7]}, new Color(0, 255, 255), true, this.center);
+    }
+    // Java pass by reference nonsense!!!
+    public Cuboid(Cuboid original){
+        // Basic cuboid attributes
+        this.x = original.x();
+        this.y = original.y();
+        this.z = original.z(); 
+        this.width = original.width();
+        this.height = original.height();
+        this.depth = original.depth();
+        this.center = new Point3d(x + (width / 2), y + (height / 2), z + (depth / 2));
+        // Define vertices, "front" layer
+        for(int i = 0; i < 8; i++){
+            this.verts[i] = new Point3d(original.getVert(i));
+        }
         // Define faces       {vertices of this face...............................}  color of this face            does it face backward at definition (for culling)
         faces[0] = new Face3d(new Point3d[] {verts[0], verts[1], verts[2], verts[3]}, new Color(0, 255, 255), false, this.center);
         faces[1] = new Face3d(new Point3d[] {verts[1], verts[2], verts[6], verts[5]}, new Color(0, 255, 255), true, this.center);
@@ -119,8 +138,8 @@ public class Cuboid {
                 vert2 = faces[i].getVert((k + 1) % 4).toPersp(Gui.FOCAL_LENGTH);
 
                 // Is the vert at k onscreen? If so this face is onscreen.
-                if(vert1.x() + 640 >= 0 && vert1.x() + 640 <= gui.width() &&
-                   vert1.y() + 360 >= 0 && vert1.y() + 360 <= gui.height() && vert1.z() <= -Gui.FOCAL_LENGTH) {
+                if(vert1.x() + 640 >= 0 && vert1.x() + 640 <= Gui.WIDTH &&
+                   vert1.y() + 360 >= 0 && vert1.y() + 360 <= Gui.HEIGHT && vert1.z() <= -Gui.FOCAL_LENGTH) {
                     isVisible = true;
                 }
                 // Determine winding order between this vert and the vert after it.
@@ -167,6 +186,17 @@ public class Cuboid {
     }
     public double z(){
         return z;
+    }
+    public double width(){
+        return width;
+    }
+    
+    public double height(){
+        return height;
+    }
+    
+    public double depth(){
+        return depth;
     }
     public Point3d center(){
         return center;

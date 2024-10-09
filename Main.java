@@ -26,5 +26,9 @@ import java.awt.AWTException;
 class Main{
     public static void main(String[] args) throws AWTException{
         new GameManager();
+        Point3d bruh = new Point3d();
+        Point3d g = new Point3d(bruh.x(), bruh.y(), bruh.z());
+        g.move(900, 0, 0);
+        System.out.println(bruh);
     }
 }
