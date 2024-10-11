@@ -126,12 +126,13 @@ public class Gui extends JPanel{
     public void drawCuboid(Cuboid c){
         Cuboid temp = new Cuboid(c);
         temp.cull();
-        
-        // Reset the y axis so that it points up.
-        //Rotate cubes.
+
+        temp.move(0, camera.pos().y(), 0);
+
         temp.rotateAboutY(camera.pos().flip3d(), -camera.angleYaw());
         temp.rotateAboutX(camera.pos().flip3d(), camera.anglePitch());
-        temp.move(camera.pos().x(), camera.pos().y(), camera.pos().z());
+        
+        temp.move(camera.pos.x(), 0, -camera.pos.z());
         for(int i = 0; i < 6; i++){
             if(!temp.getFace(i).isCulled()){
                 polys.add(temp.getFace(i));

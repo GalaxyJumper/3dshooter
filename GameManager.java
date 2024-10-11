@@ -52,12 +52,6 @@ public class GameManager implements ActionListener{
         }
         for(int i = 0; i < cuboids.length; i++){
             // Reset the y axis so that it points up.
-            //cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -camera.anglePitch());
-            // Rotate cubes.
-            //cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), rotateY / 800);
-            //cuboids[i].rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -rotateX / 800);
-            // Return the y axis to its former position.
-            //cuboids[i].rotateAboutX(new Point3d(0, 0, -Gui.FOCAL_LENGTH), camera.anglePitch());
             gui.drawCuboid(cuboids[i]);
             if(input.getKey(87)){
                 camera.addVel(0, 0, 0.05);
