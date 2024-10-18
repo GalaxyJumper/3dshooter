@@ -6,7 +6,8 @@ public class Cuboid {
     public Point3d center;
     Point3d cameraPos = new Point3d(0, 0, 0);
     Point3d lastFarthestVert = new Point3d(0, 0, 0);
-    public Cuboid(int x, int y, int z, int width, int height, int depth){
+    boolean isStatic;
+    public Cuboid(int x, int y, int z, int width, int height, int depth, boolean isStatic){
         // Basic cuboid attributes
         this.x = x;
         this.y = y;
@@ -15,6 +16,7 @@ public class Cuboid {
         this.height = height;
         this.depth = depth;
         this.center = new Point3d(x + (width / 2), y + (height / 2), z + (depth / 2));
+        this.isStatic = isStatic;
         // Define vertices, "front" layer
         verts[0] = new Point3d(x, y, z);
         verts[1] = new Point3d(x + width, y, z);
@@ -200,6 +202,9 @@ public class Cuboid {
     }
     public Point3d center(){
         return center;
+    }
+    public boolean isStatic(){
+        return isStatic;
     }
 
 
