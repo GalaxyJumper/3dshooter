@@ -128,9 +128,11 @@ public class Gui extends JPanel{
         temp.cull();
         if(!c.isStatic()){
             temp.move(0, camera.pos().y(), 0);
-            temp.rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -camera.angleYaw());
             temp.move(camera.pos().x(), 0, camera.pos().z());
-            temp.rotateAboutX(new Point3d(camera.pos().x(), 0, camera.pos().z() - Gui.FOCAL_LENGTH), camera.anglePitch());
+            temp.rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -camera.angleYaw());
+            temp.rotateAboutX(new Point3d(0, 0, 0 - Gui.FOCAL_LENGTH), camera.anglePitch());
+
+            System.out.println(new Point3d(-camera.pos().x(), 0, camera.pos().z() - Gui.FOCAL_LENGTH));
         }
         for(int i = 0; i < 6; i++){
             if(!temp.getFace(i).isCulled()){
