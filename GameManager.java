@@ -45,29 +45,32 @@ public class GameManager implements ActionListener{
         camera.rotateYaw(rotateX / 800);
         camera.rotatePitch(rotateY / 800);
         //Player movement      
+        
+        if(input.getKey(87)){
+            camera.addVel(0, 0, 0.05);
+        } else if(input.getKey(83)){
+            camera.addVel(0, 0, -0.05);
+        }
+        if(input.getKey(65)){
+            camera.addVel(0.05, 0, 0);
+        } else if(input.getKey(68)){
+            camera.addVel(-0.05, 0, 0);
+        }
+        if(input.getKey(32)){
+            camera.addVel(0, 0.05, 0);
+        } else if(input.getKey(17)){
+            camera.addVel(0, -0.05, 0);
+        }
+
         camera.scaleVel(0.98);
         camera.move(camera.vel());
+     
         for(int i = 0; i < staticCuboids.length; i++){
             gui.drawCuboid(staticCuboids[i]);
         }
         for(int i = 0; i < cuboids.length; i++){
             // Reset the y axis so that it points up.
             gui.drawCuboid(cuboids[i]);
-            if(input.getKey(87)){
-                camera.addVel(0, 0, 0.05);
-            } else if(input.getKey(83)){
-                camera.addVel(0, 0, -0.05);
-            }
-            if(input.getKey(65)){
-                camera.addVel(0.05, 0, 0);
-            } else if(input.getKey(68)){
-                camera.addVel(-0.05, 0, 0);
-            }
-            if(input.getKey(32)){
-                camera.addVel(0, 0.05, 0);
-            } else if(input.getKey(17)){
-                camera.addVel(0, -0.05, 0);
-            }
         }
 
         gui.background(220, 220, 220);
