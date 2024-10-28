@@ -123,13 +123,18 @@ public class Cuboid {
     // or backward using winding order - loop through the vertices of said face
     // in the order you are given them and check whether they wind clockwise 
     // or counterclockwise.
-    public void cull(){
+    public void cull(Camera camera){
 
         double sum = 0;
         Point3d vert1, vert2;
         boolean isVisible;
-
-        for(int i = 0; i < faces.length; i++){
+        if(!isStatic){
+            this.move(0, camera.pos().y(), 0);
+            this.move(camera.pos().x(), 0, camera.pos().z());
+            this.rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -camera.angleYaw());
+            this.rotateAboutX(new Point3d(0, 0, 0 - Gui.FOCAL_LENGTH), camera.anglePitch());
+        }
+        for(int i = 0; i < 6; i++){
             sum = 0; // Reset sum for each iteration
             isVisible = false; // assume that the face is offscreen until we find an onscreen point
             faces[i].setCulled(false); // assume that this face is facing forward until proven otherwise
@@ -158,7 +163,12 @@ public class Cuboid {
                 faces[i].setCulled(true);
             }
         }
-        
+        if(!isStatic){
+            this.rotateAboutX(new Point3d(0, 0, 0 - Gui.FOCAL_LENGTH), -camera.anglePitch());
+            this.rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), camera.angleYaw());
+            this.move(-camera.pos().x(), 0, -camera.pos().z());
+            this.move(0, -camera.pos().y(), 0);
+        }
     }
     // Gets the center of this Cuboid by averaging all the points.
     // TODO: Optimize.

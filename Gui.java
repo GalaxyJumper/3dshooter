@@ -125,14 +125,14 @@ public class Gui extends JPanel{
     }
     public void drawCuboid(Cuboid c){
         Cuboid temp = new Cuboid(c);
-        temp.cull();
+        temp.cull(camera);
         if(!c.isStatic()){
             temp.move(0, camera.pos().y(), 0);
             temp.move(camera.pos().x(), 0, camera.pos().z());
             temp.rotateAboutY(new Point3d(0, 0, -Gui.FOCAL_LENGTH), -camera.angleYaw());
             temp.rotateAboutX(new Point3d(0, 0, 0 - Gui.FOCAL_LENGTH), camera.anglePitch());
 
-            System.out.println(new Point3d(-camera.pos().x(), 0, camera.pos().z() - Gui.FOCAL_LENGTH));
+            
         }
         for(int i = 0; i < 6; i++){
             if(!temp.getFace(i).isCulled()){

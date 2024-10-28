@@ -13,7 +13,7 @@ public class GameManager implements ActionListener{
     Cuboid[] cuboids;
     Cuboid[] staticCuboids; 
     Camera camera;
-    double cosAngle, sinAngle;
+    double cosAngle, sinAngle, cosRightAngle, sinRightAngle;
     public GameManager() throws AWTException{
         camera = new Camera();
         input = new InputManager();
@@ -46,21 +46,24 @@ public class GameManager implements ActionListener{
         camera.rotateYaw(rotateX / 800);
         camera.rotatePitch(rotateY / 800);
         //Player movement      
-        sinAngle = Math.sin(rotateX);
+        sinAngle = Math.sin(-camera.angleYaw());
+        cosAngle = Math.cos(camera.angleYaw());
+        cosRightAngle = Math.cos(-camera.angleYaw() + Math.PI/2);
+        sinRightAngle = Math.sin(-camera.angleYaw() + Math.PI/2);
         if(input.getKey(87)){
-            camera.addVel(0, 0, 0.05 * sinAngle);
+            camera.addVel(0.05 * sinAngle, 0, 0.05 * cosAngle);
         } else if(input.getKey(83)){
-            camera.addVel(0, 0, -0.05 * sinAngle);
+            camera.addVel(-0.05 * sinAngle, 0, -0.05 * cosAngle);
         }
         if(input.getKey(65)){
-            camera.addVel(0.05 * sinAngle, 0, 0);
+            camera.addVel(0.05 * sinRightAngle, 0, 0.05 * cosRightAngle);
         } else if(input.getKey(68)){
-            camera.addVel(-0.05 * sinAngle, 0, 0);
+            camera.addVel(-0.05 * sinRightAngle, 0, -0.05 * cosRightAngle);
         }
         if(input.getKey(32)){
-            camera.addVel(0, 0.05 * sinAngle, 0);
+            camera.addVel(0, 0.05, 0);
         } else if(input.getKey(17)){
-            camera.addVel(0, -0.05 * sinAngle, 0);
+            camera.addVel(0, -0.05, 0);
         }
 
         camera.scaleVel(0.98);
