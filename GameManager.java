@@ -23,7 +23,11 @@ public class GameManager implements ActionListener{
         Cuboid[] temp = {
             new Cuboid(-50, -50, -50, 100, 100, 100, false), // bruh
             new Cuboid(-160, -50, -50, 100, 100, 100, false), // what
-            new Cuboid(-500, 500, -500, 1000, 20, 1000, false) // floor
+            new Cuboid(-500, 500, -500, 1000, 20, 1000, false), // floor
+            new Cuboid(450, -200, -500, 50, 700, 50, false),
+            new Cuboid(-500, -200, -500, 50, 700, 50, false),
+            new Cuboid(-500, -200, 450, 50, 700, 50, false),
+            new Cuboid(450, -200, 450, 50, 700, 50, false),
         };
         Cuboid[] staticTemp = {
             new Cuboid(210, 150, -200, 50, 50, 300, true),
@@ -41,6 +45,8 @@ public class GameManager implements ActionListener{
     public void actionPerformed(ActionEvent e){
         now = System.currentTimeMillis();
         input.updateMouse(); 
+        cuboids[0].rotateY(0.1);
+        cuboids[1].rotateAboutY(cuboids[0].center(), 0.1);
         rotateX = input.dMouseX();
         rotateY = input.dMouseY(); 
         camera.rotateYaw(rotateX / 800);
